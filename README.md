@@ -2,7 +2,7 @@
 
 
 ## ✨ Features
-
+..
 * **GitHub Repository Analysis** – Analyze any public GitHub repository by simply pasting its URL.
 * **Automatic Repository Cloning** – Securely clones the repository and prepares it for analysis.
 * **Smart Code Parsing** – Extracts and processes source code, configuration files, and documentation while ignoring unnecessary files.
