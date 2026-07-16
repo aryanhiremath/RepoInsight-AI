@@ -1,25 +1,13 @@
-from git import Repo
+from clone_repo import clone_repository
 
-repo = Repo(".")
 
-print(f"Repository: {repo.working_dir}")
-print(f"Current Branch: {repo.active_branch.name}")
+def main():
+    repo_url = input("Enter GitHub Repository URL: ").strip()
 
-# Total commits
-total_commits = sum(1 for _ in repo.iter_commits())
-print(f"Total Commits: {total_commits}")
+    repo_path = clone_repository(repo_url)
 
-# Contributors
-contributors = set()
-for commit in repo.iter_commits():
-    contributors.add(commit.author.name)
+    print(f"\nRepository stored at: {repo_path}")
 
-print(f"Contributors: {', '.join(contributors)}")
 
-# Latest commit
-latest = repo.head.commit
-print("\nLatest Commit")
-print("-" * 40)
-print(f"SHA     : {latest.hexsha[:7]}")
-print(f"Author  : {latest.author.name}")
-print(f"Message : {latest.message.strip()}")
+if __name__ == "__main__":
+    main()
