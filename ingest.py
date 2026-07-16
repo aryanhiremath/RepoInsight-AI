@@ -1,50 +1,75 @@
 from pathlib import Path
 
-SUPPORTED_EXTENSIONS = {
+
+def get_source_files(repo_path):
+    files = []
+
+    allowed_extensions = {
     ".py",
     ".js",
-    ".ts",
     ".jsx",
+    ".ts",
     ".tsx",
+    ".html",
+    ".css",
+    ".scss",
     ".java",
     ".cpp",
     ".c",
     ".h",
-    ".cs",
-    ".go",
-    ".rs",
-    ".php",
     ".md",
     ".txt",
     ".json",
     ".yaml",
-    ".yml",
-}
+    ".yml"
+    }
 
-IGNORE_DIRS = {
-    ".git",
-    "__pycache__",
-    "node_modules",
-    ".venv",
-    "venv",
-    "dist",
-    "build",
-}
-
-
-def get_source_files(repo_path: Path):
-    files = []
+    repo_path = Path(repo_path)
 
     for file in repo_path.rglob("*"):
-        if not file.is_file():
-            continue
 
-        if file.suffix not in SUPPORTED_EXTENSIONS:
-            continue
+        if file.is_file() and file.suffix.lower() in allowed_extensions:
 
-        if any(folder in IGNORE_DIRS for folder in file.parts):
-            continue
+            # Ignore unwanted folders
+            if any(
+                folder in file.parts
+                for folder in [
+                    ".git",
+                    "node_modules",
+                    "__pycache__",
+                    "venv"
+                ]
+            ):
+                continue
 
-        files.append(file)
+            files.append(file)
 
     return files
+
+
+
+def load_documents(files):
+
+    documents = []
+
+    for file in files:
+
+        try:
+            content = file.read_text(
+                encoding="utf-8",
+                errors="ignore"
+            )
+
+            documents.append(
+                {
+                    "content": content,
+                    "source": str(file)
+                }
+            )
+
+        except Exception as e:
+            print(
+                f"Skipping {file}: {e}"
+            )
+
+    return documents

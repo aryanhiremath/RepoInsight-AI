@@ -1,32 +1,36 @@
+import os
+import subprocess
 from pathlib import Path
-from git import Repo
-
-# Folder where all repositories will be stored
-REPOS_DIR = Path("repos")
-REPOS_DIR.mkdir(exist_ok=True)
 
 
-def clone_repository(repo_url: str) -> Path:
-    """
-    Clone a GitHub repository if it doesn't already exist.
-    Returns the path to the cloned repository.
-    """
-
-    # Extract repository name from URL
+def clone_repository(repo_url):
     repo_name = repo_url.rstrip("/").split("/")[-1]
 
-    # Destination path
-    clone_path = REPOS_DIR / repo_name
+    if repo_name.endswith(".git"):
+        repo_name = repo_name[:-4]
 
-    # If already cloned, reuse it
-    if clone_path.exists():
-        print(f"✅ Repository '{repo_name}' already exists.")
-        return clone_path
+    repo_folder = Path("repos") / repo_name
+
+    # Create repos folder
+    os.makedirs("repos", exist_ok=True)
+
+    # If already cloned
+    if repo_folder.exists():
+        print(f"✅ Repository already exists: {repo_folder}")
+        return repo_folder
 
     print(f"📥 Cloning '{repo_name}'...")
 
-    Repo.clone_from(repo_url, clone_path)
+    subprocess.run(
+        [
+            "git",
+            "clone",
+            repo_url,
+            str(repo_folder)
+        ],
+        check=True
+    )
 
     print("✅ Repository cloned successfully!")
 
-    return clone_path
+    return repo_folder
