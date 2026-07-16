@@ -1,4 +1,5 @@
 from clone_repo import clone_repository
+from ingest import get_source_files
 
 
 def main():
@@ -6,7 +7,12 @@ def main():
 
     repo_path = clone_repository(repo_url)
 
-    print(f"\nRepository stored at: {repo_path}")
+    files = get_source_files(repo_path)
+
+    print(f"\nFound {len(files)} files\n")
+
+    for file in files[:10]:
+        print(file)
 
 
 if __name__ == "__main__":
