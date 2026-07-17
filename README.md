@@ -122,4 +122,4 @@ RepoInsight-AI/
 ✅ FAISS vector search implemented  
 ✅ RAG-based repository Q&A completed  
 
-Frontend and API integration are planned for the next phase.
+Frontend and API integration are planned for the next phase
