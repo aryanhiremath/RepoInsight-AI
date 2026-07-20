@@ -111,7 +111,7 @@ RepoInsight-AI/
 - Chat history support
 - Cloud deployment
 
---
+---
 
 ## 📌 Current Status
 
