@@ -44,7 +44,7 @@ Local LLM
 Repository Q&A
 
 
----
+--
 
 ## 🛠️ Tech Stack
 
